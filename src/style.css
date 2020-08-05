@@ -1,0 +1,103 @@
+/* Page and Browser standards */
+
+:root {
+  font-size: 16px;
+  --vanhack-blue: rgb(6, 117, 206);
+  --font-black: rgb(88, 99, 109);
+}
+
+html {
+  display: flex;
+  justify-content: center;
+  font-family: "Roboto";
+}
+
+body {
+  max-width: 1280px;
+  width: 100%;
+}
+
+/* Header */
+
+.events__header {
+  margin: 0 2rem;
+}
+
+/* Header > Navigation */
+
+.events__navigation {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+
+/* Header > Navigation > General */
+
+.navigation__list {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.navigation__list-item {
+  list-style: none;
+  padding: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.navigation__list-item--active::after,
+.navigation__list-item:not(:first-child):hover::after {
+  position: absolute;
+  width: calc(100% - 16px);
+  height: 4px;
+  bottom: 0;
+  left: 8px;
+  content: "bottom bar";
+  color: rgba(0, 0, 0, 0);
+  background-color: var(--vanhack-blue);
+  animation: slide-in 0.2s ease-out;
+}
+
+.navigation__link {
+  text-decoration: none;
+  color: var(--font-black);
+  transition: border 0.2s ease-out;
+}
+
+.navigation__list-item:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.navigation__list-item.platform-list__company-logo-item {
+  margin-right: 1rem;
+}
+
+/* Header > Navigation > .profile-list */
+
+.profile-list__profile-image-item {
+  max-width: 2rem;
+  max-height: 2rem;
+  border-radius: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  padding: 0;
+}
+
+.profile-list__profile-image {
+  height: 100%;
+}
+
+/* Keyframes */
+@keyframes slide-in {
+  from {
+    transform: translateY(4px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
