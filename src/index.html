@@ -39,8 +39,7 @@
         <ul class="navigation__profile-list profile-list">
           <li class="navigation__list-item profile-list__profile-image-item">
             <img
-              loading="eager"
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+              src="https://via.placeholder.com/32x32?text=Profile"
               alt="Profile image for the user."
               class="profile-list__profile-image"
             />
@@ -48,6 +47,20 @@
         </ul>
       </nav>
     </header>
+
+    <main class="events__content content">
+      <h1 class="content__title">Events</h1>
+      <ul class="content__event-list event-list">
+        <li class="event-list__event-card event-card" event-card-template>
+          <h2 class="event-card__header card-header">
+            <strong class="card-header__title"></strong>
+            <span class="card-header__subtitle event-card__type"></span>
+          </h2>
+          <p class="event-card__date"></p>
+          <p class="event-card__location"></p>
+        </li>
+      </ul>
+    </main>
 
     <script src="./index.js"></script>
   </body>
