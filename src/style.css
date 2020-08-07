@@ -2,14 +2,24 @@
 
 :root {
   font-size: 16px;
+
+  /* Colors */
+
   --vanhack-blue: rgb(6, 117, 206);
-  --font-black: rgb(88, 99, 109);
+  --font-color--black: rgb(88, 99, 109);
+
+  /* Constants */
+
+  --hero-image-height: 240px;
+  --hero-image-width: 180px;
+  --landscape-image-height: 180px;
+  --landscape-image-width: 240px;
 }
 
 html {
   display: flex;
   justify-content: center;
-  font-family: "Roboto";
+  font-family: 'Roboto';
 }
 
 body {
@@ -24,6 +34,10 @@ li {
   overflow: hidden;
 }
 
+p {
+  margin: 0;
+}
+
 /* Keyframes */
 
 @keyframes slide-in {
@@ -32,6 +46,16 @@ li {
   }
   to {
     transform: translateY(0);
+  }
+}
+
+@keyframes card-jiggle {
+  from {
+    transform: scale(1.02);
+  }
+
+  to {
+    transform: scale(1.02) matrix3d(1, 0, 0, 0.00009, 0, 1, 0, 0.00006, 0, 0, 1, 0, 0, 0, 0, 1);
   }
 }
 
@@ -66,7 +90,7 @@ li {
   height: 4px;
   bottom: 0;
   left: 0.5rem;
-  content: "bottom bar";
+  content: 'bottom bar';
   color: rgba(0, 0, 0, 0);
   background-color: var(--vanhack-blue);
   animation: slide-in 0.2s ease-out;
@@ -74,7 +98,7 @@ li {
 
 .navigation__link {
   text-decoration: none;
-  color: var(--font-black);
+  color: var(--font-color--black);
   transition: border 0.2s ease-out;
 }
 
@@ -103,4 +127,155 @@ li {
   height: 100%;
   min-width: 2rem;
   min-height: 2rem;
+}
+
+/* Main > Events > .event-list */
+
+.event-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0;
+}
+
+/* Main > Events > .event-card */
+
+.event-card {
+  height: min-content;
+  max-width: calc(45% - 16px);
+  padding: 16px 32px;
+  margin-top: 32px;
+  border-radius: 6px;
+  position: relative;
+  overflow: visible;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease-out, transform 0.1s ease-out;
+  box-shadow: 0 0px 5.3px rgba(0, 0, 0, 0.02), 0 0px 17.9px rgba(0, 0, 0, 0.036), 0 0px 80px rgba(0, 0, 0, 0.07);
+}
+
+.event-card--leap,
+.event-card--recruiting-mission,
+.event-card--vanhackathon {
+  width: 100%;
+  margin-right: 0;
+  max-width: unset;
+}
+
+.event-card--leap .event-card__header,
+.event-card--recruiting-mission .event-card__header,
+.event-card--vanhackathon .event-card__header {
+  font-size: 1rem;
+}
+
+.event-card:hover {
+  box-shadow: 0 5.2px 2.2px rgba(0, 0, 0, 0.02), 0 12.5px 5.3px rgba(0, 0, 0, 0.028), 0 23.5px 10px rgba(0, 0, 0, 0.035),
+    0 42px 17.9px rgba(0, 0, 0, 0.042), 0 78.5px 33.4px rgba(0, 0, 0, 0.05), 0 188px 80px rgba(0, 0, 0, 0.07);
+  transform: scale(1.02);
+}
+
+/* Main > Events > .event-card > Images */
+
+.event-card__hero-image-wrapper {
+  width: var(--hero-image-width);
+  height: var(--hero-image-height);
+  position: absolute;
+  left: 32px;
+  top: -64px;
+  border-radius: 12px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.event-card__hero-image {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.event-card__landscape-image-wrapper {
+  max-width: 40%;
+  max-height: var(--landscape-image-height);
+  position: absolute;
+  right: 32px;
+  bottom: -64px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.event-card__landscape-image {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.event-card--with-hero-image {
+  margin-top: 96px;
+}
+
+.event-card--with-landscape-image {
+  margin-bottom: 96px;
+}
+
+.event-card--with-landscape-image + .event-card--with-hero-image {
+  margin-top: 0;
+}
+
+/* Main > Events > .event-card > Header */
+
+.event-card--with-hero-image .event-card__header,
+.event-card--with-hero-image .event-card__content {
+  margin-left: calc(var(--hero-image-width) + 32px);
+}
+
+.event-card__header {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.66rem;
+}
+
+.card-header__subtitle {
+  font-size: 1.2em;
+  font-weight: 400;
+  color: var(--vanhack-blue);
+}
+
+.card-header__title {
+  font-size: 3em;
+}
+
+/* Main > Events > .event-card > Information */
+
+/* .event-card__content {
+  display: flex;
+  align-items: center;
+} */
+
+.event-card__location-container,
+.event-card__date-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.event-card__location-container > svg,
+.event-card__date-container > svg {
+  margin-right: 0.5rem;
+}
+
+.event-card__information-icon {
+  color: var(--vanhack-blue);
+}
+
+.event-card__location-icon {
+  display: none;
+}
+
+.event-card__location--online .event-card__location-icon--online {
+  display: block;
+}
+
+.event-card__location--physical .event-card__location-icon--physical {
+  display: block;
+}
+
+.event-card__information {
+  margin: 0.5rem 0;
 }

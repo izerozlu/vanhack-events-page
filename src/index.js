@@ -19,8 +19,19 @@ const MOCKS = {
       location: 'Online',
     },
     {
+      id: 'a2a7fb57-1ad1-4bdf-83e6-2e79f97f0701',
+      title: '2020 Annual VanHackathon',
+      description:
+        'Etiam erat velit scelerisque in dictum. Amet luctus venenatis lectus magna fringilla urna porttitor. Proin libero nunc consequat interdum varius sit amet mattis. Lacus sed turpis tincidunt id aliquet. Habitant morbi tristique senectus et netus. Euismod quis viverra nibh cras pulvinar mattis nunc sed.',
+      date: '2020-02-11T18:00:00',
+      type: EVENT_TYPES.VANHACKATHON,
+      location: 'Online',
+      landscapeImage:
+        'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80',
+    },
+    {
       id: 'a3b5ed70-1624-471e-bf69-91337d0bf79b',
-      title: 'Toronto VanHackathon 2020',
+      title: 'Toronto Developer Conference 2020',
       description:
         'At auctor urna nunc id cursus metus aliquam eleifend mi. Blandit cursus risus at ultrices mi tempus imperdiet nulla malesuada.</br>Ac placerat vestibulum lectus mauris ultrices eros. Gravida dictum fusce ut placerat orci. Lobortis feugiat vivamus at augue eget arcu dictum varius duis.</br>Consectetur a erat nam at lectus.',
       date: '2020-08-24T19:30:00',
@@ -33,26 +44,32 @@ const MOCKS = {
       description:
         'Magna fringilla urna porttitor rhoncus. Dictum non consectetur a erat nam at. Aliquam purus sit amet luctus venenatis lectus. Phasellus faucibus scelerisque eleifend donec. Tortor vitae purus faucibus ornare suspendisse.',
       date: '2020-11-06T17:30:00',
-      type: EVENT_TYPES.RECRUITING_MISSION,
+      type: EVENT_TYPES.PREMIUM_WEBINAR,
       location: 'Ontario, Canada',
+      heroImage:
+        'https://images.unsplash.com/photo-1555421689-43cad7100750?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
     },
     {
       id: '2c4ed3c0-8945-466e-89fd-d0e2333b5855',
-      title: "Izer's Hiring Success Story",
+      title: "Thomas' Hiring Success Story",
       description:
         'Mauris augue neque gravida in. Quis vel eros donec ac odio tempor orci. Vitae semper quis lectus nulla at volutpat diam. Ut tristique et egestas quis ipsum suspendisse ultrices gravida. Cras sed felis eget velit aliquet sagittis id consectetur purus. Nullam eget felis eget nunc lobortis mattis. Eget sit amet tellus cras adipiscing enim eu turpis egestas.',
       date: '2020-03-18T18:00:00',
-      type: EVENT_TYPES.PREMIUM_WEBINAR,
+      type: EVENT_TYPES.RECRUITING_MISSION,
       location: 'Online',
+      heroImage:
+        'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=635&q=80',
     },
     {
       id: 'a08e0268-1c47-4737-ad31-794012512164',
-      title: 'How do VanHack works under the hood?',
+      title: 'How does VanHack work under the hood?',
       description:
         'Lacinia at quis risus sed vulputate odio ut enim. Faucibus ornare suspendisse sed nisi lacus sed viverra tellus. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Dolor morbi non arcu risus. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus. Orci ac auctor augue mauris augue neque.',
       date: '2020-07-21T17:00:00',
       type: EVENT_TYPES.OPEN_WEBINAR,
       location: 'Online',
+      landscapeImage:
+        'https://images.unsplash.com/photo-1556761175-129418cb2dfe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80',
     },
   ],
 };
@@ -191,13 +208,15 @@ class EventTypeHelper {
 // Models
 
 class Event {
-  constructor({ title, description, date, type, location, id }) {
+  constructor({ title, description, date, type, location, id, heroImage, landscapeImage }) {
     this.title = title;
     this.description = description;
     this.date = new Date(date);
     this.type = type;
     this.location = location;
     this.id = id;
+    this.heroImage = heroImage;
+    this.landscapeImage = landscapeImage;
 
     this.eventPhotos = [];
     this.eventCard = null;
@@ -225,6 +244,9 @@ class Event {
     this.setCardHeader();
     this.setCardDate();
     this.setCardLocation();
+    this.setCardHeroImage();
+    this.setCardLandscapeImage();
+    this.addClickListener();
 
     return this.eventCard;
   };
@@ -250,6 +272,14 @@ class Event {
         this.eventCard.classList.add('event-card--open-webinar');
         break;
     }
+
+    if (this.heroImage) {
+      this.eventCard.classList.add('event-card--with-hero-image');
+    }
+
+    if (this.landscapeImage) {
+      this.eventCard.classList.add('event-card--with-landscape-image');
+    }
   };
 
   setCardHeader = () => {
@@ -266,14 +296,55 @@ class Event {
   };
 
   setCardLocation = () => {
-    const cardLocation = this.eventCard.querySelector('.event-card__location');
+    const cardLocationContainer = this.eventCard.querySelector('.event-card__location-container');
+    const cardLocation = cardLocationContainer.querySelector('.event-card__location');
     cardLocation.textContent = this.location;
+
+    if (this.location.toLowerCase() === 'online') {
+      cardLocationContainer.classList.add('event-card__location--online');
+    } else {
+      cardLocationContainer.classList.add('event-card__location--physical');
+    }
+  };
+
+  setCardHeroImage = () => {
+    const cardHeroImageWrapper = this.eventCard.querySelector('.event-card__hero-image-wrapper');
+    const cardHeroImage = this.eventCard.querySelector('.event-card__hero-image');
+    if (this.heroImage) {
+      cardHeroImage.setAttribute('src', this.heroImage);
+    } else {
+      cardHeroImageWrapper.remove();
+    }
+  };
+
+  setCardLandscapeImage = () => {
+    const cardLandscapeImageWrapper = this.eventCard.querySelector('.event-card__landscape-image-wrapper');
+    const cardLandscapeImage = this.eventCard.querySelector('.event-card__landscape-image');
+    if (this.landscapeImage) {
+      cardLandscapeImage.setAttribute('src', this.landscapeImage);
+    } else {
+      cardLandscapeImageWrapper.remove();
+    }
+  };
+
+  addClickListener = () => {
+    this.eventCard.addEventListener('click', (event) => {
+      console.log(this);
+    });
   };
 }
 
 class Events {
   constructor(events) {
-    this.events = events;
+    this.events = events.sort((eventA, eventB) => {
+      if (eventA.date < eventB.date) {
+        return -1;
+      } else if (eventB.date < eventA.date) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
     this.appendEventsToPageFromTemplate();
   }
 
