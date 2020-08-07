@@ -17,6 +17,24 @@ body {
   width: 100%;
 }
 
+li {
+  list-style: none;
+  padding: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Keyframes */
+
+@keyframes slide-in {
+  from {
+    transform: translateY(4px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 /* Header */
 
 .events__header {
@@ -41,20 +59,13 @@ body {
   align-items: center;
 }
 
-.navigation__list-item {
-  list-style: none;
-  padding: 8px;
-  position: relative;
-  overflow: hidden;
-}
-
 .navigation__list-item--active::after,
 .navigation__list-item:not(:first-child):hover::after {
   position: absolute;
-  width: calc(100% - 16px);
+  width: calc(100% - 1rem);
   height: 4px;
   bottom: 0;
-  left: 8px;
+  left: 0.5rem;
   content: "bottom bar";
   color: rgba(0, 0, 0, 0);
   background-color: var(--vanhack-blue);
@@ -78,26 +89,18 @@ body {
 /* Header > Navigation > .profile-list */
 
 .profile-list__profile-image-item {
-  max-width: 2rem;
   max-height: 2rem;
+  width: 2rem;
   border-radius: 100%;
   overflow: hidden;
   display: flex;
-  justify-content: start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 0;
 }
 
 .profile-list__profile-image {
   height: 100%;
-}
-
-/* Keyframes */
-@keyframes slide-in {
-  from {
-    transform: translateY(4px);
-  }
-  to {
-    transform: translateY(0);
-  }
+  min-width: 2rem;
+  min-height: 2rem;
 }
