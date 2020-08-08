@@ -15,6 +15,8 @@
             <a href="https://vanhack.com/" class="navigation__link">
               <img
                 src="https://vanhack.com/platform/d2cccb0c3b88187b88ee4000eead81c0.svg"
+                width="136"
+                height="50"
                 alt="VanHack company logo."
                 class="platform-list__company-logo"
               />
@@ -51,21 +53,8 @@
     <main class="events__content content">
       <ul class="content__event-list event-list">
         <li class="event-list__event-card event-card" event-card-template role="button">
-          <div class="card-images">
-            <div class="event-card__hero-image-wrapper">
-              <img
-                src="https://via.placeholder.com/180x240?text=Hero+Image"
-                alt="Image for summarizing the event."
-                class="event-card__hero-image"
-              />
-            </div>
-            <div class="event-card__landscape-image-wrapper">
-              <img
-                src="https://via.placeholder.com/480x240?text=Langscape+Image"
-                alt="Image for summarizing the event."
-                class="event-card__landscape-image"
-              />
-            </div>
+          <div class="event-card__video-container">
+            <div class="event-card__iframe-wrapper"></div>
           </div>
           <h2 class="event-card__header card-header">
             <span class="card-header__subtitle event-card__type"></span>
@@ -89,6 +78,7 @@
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
               <p class="event-card__information event-card__date"></p>
+              <p class="event-card__date-time"></p>
             </div>
             <div class="event-card__location-container">
               <svg
@@ -123,8 +113,28 @@
                 <line x1="12" y1="2" x2="12" y2="12"></line>
               </svg>
               <p class="event-card__information event-card__location"></p>
+              <a href="/" target="_blank" class="event-card__location-link"></a>
             </div>
-            <!-- <button class="event-card__detail-button" type="button">Details</button> -->
+            <div class="event-card__description"></div>
+          </div>
+          <div class="event-card__images">
+            <div class="event-card__hero-image-wrapper">
+              <img
+                src="https://via.placeholder.com/180x240?text=Hero+Image"
+                alt="Image for summarizing the event."
+                class="event-card__hero-image"
+              />
+            </div>
+            <div class="event-card__landscape-image-wrapper">
+              <img
+                src="https://via.placeholder.com/480x240?text=Langscape+Image"
+                alt="Image for summarizing the event."
+                class="event-card__landscape-image"
+              />
+            </div>
+          </div>
+          <div class="event-card__event-photos event-photos">
+            <div class="event-photos__image-container"></div>
           </div>
         </li>
       </ul>
