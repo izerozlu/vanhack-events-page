@@ -103,10 +103,13 @@
               </a>
             </div>
             <strong class="card-header__title"></strong>
-            <button class="event-card__apply-button" type="button">Apply</button>
+            <div class="card-header__button-container">
+              <button class="event-card__apply-button card-header__button" type="button">Apply</button>
+              <button class="event-card__cancel-button card-header__button" type="button">Cancel</button>
+            </div>
           </h2>
           <div class="event-card__tab-container">
-            <div class="event-card__content-tab">
+            <div class="event-card__content-tab event-card__tab">
               <div class="event-card__content">
                 <div class="event-card__date-container">
                   <svg
@@ -164,12 +167,36 @@
                 </div>
                 <div class="event-card__description"></div>
               </div>
-              <div class="event-card__event-photos event-photos">
-                <div class="event-photos__image-container"></div>
-              </div>
             </div>
-            <div class="event-card__application-form-tab">
-              FORM
+            <div class="event-card__application-form-tab event-card__tab">
+              <form class="event-card__application-form application-form">
+                <div class="application-form__input-container">
+                  <div class="application-form__input-wrapper">
+                    <label for="application-form__name-input" class="application-form__label">Name</label>
+                    <input type="text" id="application-form__name-input" class="application-form__input" />
+                  </div>
+                </div>
+                <div class="application-form__input-container">
+                  <div class="application-form__input-wrapper">
+                    <label for="application-form__surname-input" class="application-form__label">Surname</label>
+                    <input type="text" id="application-form__surname-input" class="application-form__input" />
+                  </div>
+                </div>
+                <div class="application-form__input-container">
+                  <div class="application-form__input-wrapper">
+                    <label for="application-form__email-input" class="application-form__label">Email</label>
+                    <input type="text" id="application-form__email-input" class="application-form__input" />
+                  </div>
+                </div>
+                <div class="application-form__input-container">
+                  <div class="application-form__input-wrapper">
+                    <label for="application-form__area-of-interest-input" class="application-form__label"
+                      >Area of Interest</label
+                    >
+                    <input type="text" id="application-form__area-of-interest-input" class="application-form__input" />
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
           <div class="event-card__images">
@@ -187,6 +214,7 @@
                 class="event-card__landscape-image"
               />
             </div>
+            <div class="event-card__event-photos event-photos"></div>
           </div>
         </li>
       </ul>

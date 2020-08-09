@@ -10,6 +10,7 @@
   --blue--regular: rgb(6, 117, 206);
   --blue--dark: rgb(15, 76, 117);
   --gray--light: rgb(88, 99, 109);
+  --red--regular: rgb(244, 67, 54);
 
   /* Constants */
 
@@ -176,7 +177,7 @@ p {
 /* Main > .event-card */
 
 .event-card {
-  height: min-content;
+  max-height: 240px;
   max-width: calc(45% - 16px);
   padding: 16px 32px;
   margin-top: 32px;
@@ -289,7 +290,7 @@ p {
   margin-top: 2rem;
 }
 
-.event-photos__image-container {
+.event-card__event-photos {
   display: flex;
   min-width: 90vw;
   position: relative;
@@ -339,7 +340,7 @@ p {
   height: 100%;
   width: 100%;
 }
-/* Main > .event-card > Header */
+/* Main > .event-card > .card-header */
 
 .event-card--with-hero-image .event-card__header,
 .event-card--with-hero-image .event-card__tab-container {
@@ -362,27 +363,40 @@ p {
   font-size: 3em;
 }
 
-.event-card__apply-button {
+/* Main > .event-card > .card-header > .card-header__button-container*/
+
+.card-header__button-container {
   display: none;
   position: absolute;
   right: 2rem;
   top: 2rem;
-  height: 4rem;
+}
+
+.card-header__button {
+  height: 3rem;
   width: 6rem;
   font-size: 1.33rem;
-  border: 1px solid var(--primary-color);
   color: white;
   border-radius: 6px;
   padding: unset;
   cursor: pointer;
-  background: linear-gradient(90deg, rgba(6, 117, 206, 1) 0%, rgba(15, 76, 117, 1) 100%);
-  background-size: 200% 100%;
-  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+  transition: transform 0.1s ease-out;
+  border: unset;
 }
 
-.event-card__apply-button:hover {
-  transform: scale(1.05);
-  box-shadow: var(--box-shadow--hover);
+.event-card__apply-button {
+  background: linear-gradient(90deg, rgba(6, 117, 206, 1) 0%, rgba(15, 76, 117, 1) 100%);
+  margin-right: 0.5rem;
+}
+
+.event-card__cancel-button {
+  background: none;
+  color: var(--red--regular);
+  display: none;
+}
+
+.event-card--applying .event-card__cancel-button {
+  display: inline;
 }
 
 /* Main > .event-card > Information */
@@ -446,6 +460,7 @@ p {
 /* Main > .event-card--toggled */
 
 .event-card--toggled {
+  max-height: unset;
   box-shadow: var(--box-shadow--hover);
   transform: scale(1.02);
   margin-bottom: 32px;
@@ -483,7 +498,7 @@ p {
   color: var(--blue--light);
 }
 
-.event-card--toggled .event-card__apply-button {
+.event-card--toggled .card-header__button-container {
   display: block;
 }
 
@@ -492,30 +507,69 @@ p {
 .event-card__tab-container {
   overflow: hidden;
   display: flex;
+  padding: 1rem 0;
+}
+
+.event-card__tab {
+  min-width: 100%;
+  position: relative;
+  left: 0;
+  transition: left 0.25s ease-out;
 }
 
 /* Main > .event-card > .event-card__tab-container > .event-card__content-tab */
 
-.event-card__content-tab {
-  width: 100%;
-  position: relative;
-  left: 0;
-  transition: left 0.25s ease-out;
-}
-
 .event-card--applying .event-card__content-tab {
   left: -150%;
+  height: 0;
 }
 
-/* Main > .event-card > .event-card__tab-container > .event-card__application-form-tab*/
-
-.event-card__application-form-tab {
-  width: 100%;
-  position: relative;
-  left: 0;
-  transition: left 0.25s ease-out;
-}
+/* Main > .event-card > .event-card__tab-container > .event-card__application-form-tab */
 
 .event-card--applying .event-card__application-form-tab {
   left: -100%;
+}
+
+/* Main > .event-card > .event-card__tab-container > .event-card__application-form-tab > .application-form */
+
+.application-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.application-form__input-container {
+  height: 4rem;
+  width: 45%;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.application-form__input-wrapper {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--blue--regular);
+  border-radius: 6px;
+}
+
+.application-form__input-wrapper:focus {
+  border-color: var(--blue--dark);
+}
+
+.application-form__label {
+  position: relative;
+  margin-right: 1rem;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.application-form__input {
+  border: unset;
+  font-size: 1.33rem;
+  min-width: 0;
+  border: 1px solid rgba(0, 0, 0, 0);
 }

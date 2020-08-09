@@ -295,6 +295,9 @@ class Event {
 
     this.eventPhotos = [];
     this.eventCard = null;
+    this.applicationForm = null;
+    this.disableToggledCard = null;
+    this.isToggled = false;
 
     this.configureEventPhotos();
   }
@@ -327,6 +330,7 @@ class Event {
 
     this.addToggleClickListener();
     this.addApplyClickListener();
+    this.addCancelClickListener();
 
     return this.eventCard;
   };
@@ -412,7 +416,7 @@ class Event {
   };
 
   setCardEventPhotos = () => {
-    const cardImages = this.eventCard.querySelector('.event-photos__image-container');
+    const cardImages = this.eventCard.querySelector('.event-card__event-photos');
 
     this.eventPhotos.forEach((eventPhoto) => {
       const imageElement = document.createElement('img');
@@ -463,43 +467,61 @@ class Event {
 
   addToggleClickListener = () => {
     this.eventCard.addEventListener('click', (event) => {
-      if (!this.eventCard.classList.contains('event-card--toggled')) {
+      if (!this.isToggled) {
         event.preventDefault();
-      }
-      const toggledEventCard = document.querySelector('.event-card--toggled');
-      if (toggledEventCard) {
-        toggledEventCard.classList.remove('event-card--toggled');
+        this.disableToggledCard();
+        setTimeout(() => {
+          this.eventCard.scrollIntoView({ behavior: 'smooth' });
+        }, 120);
       }
 
       this.eventCard.classList.add('event-card--toggled');
-
-      setTimeout(() => {
-        this.eventCard.scrollIntoView({ behavior: 'smooth' });
-      }, 120);
+      this.isToggled = true;
     });
   };
 
   addApplyClickListener = () => {
+    this.applicationForm = this.eventCard.querySelector('.event-card__application-form');
     const applyButton = this.eventCard.querySelector('.event-card__apply-button');
+    applyButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+
+      this.applicationForm.querySelectorAll('input').forEach((input) => (input.value = null));
+      this.eventCard.classList.add('event-card--applying');
+    });
+  };
+
+  addCancelClickListener = () => {
+    const applyButton = this.eventCard.querySelector('.event-card__cancel-button');
     applyButton.addEventListener('click', (event) => {
       event.preventDefault();
 
-      this.eventCard.classList.add('event-card--applying');
+      this.cancelApplication();
     });
+  };
+
+  cancelApplication = () => {
+    this.applicationForm.querySelectorAll('input').forEach((input) => (input.value = null));
+    this.eventCard.classList.remove('event-card--applying');
   };
 }
 
 class Events {
   constructor(events) {
-    this.events = events.sort((eventA, eventB) => {
-      if (eventA.date < eventB.date) {
-        return -1;
-      } else if (eventB.date < eventA.date) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
+    this.events = events
+      .sort((eventA, eventB) => {
+        if (eventA.date < eventB.date) {
+          return -1;
+        } else if (eventB.date < eventA.date) {
+          return 1;
+        } else {
+          return 0;
+        }
+      })
+      .map((event) => {
+        event.disableToggledCard = this.handleEventCardToggle;
+        return event;
+      });
     this.appendEventsToPageFromTemplate();
   }
 
@@ -513,5 +535,15 @@ class Events {
     });
 
     eventCardTemplate.remove();
+  };
+
+  handleEventCardToggle = () => {
+    this.events.forEach((event) => {
+      if (event.isToggled) {
+        event.isToggled = false;
+        event.eventCard.classList.remove('event-card--toggled');
+        event.cancelApplication();
+      }
+    });
   };
 }
