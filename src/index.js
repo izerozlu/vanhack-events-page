@@ -19,6 +19,8 @@ const MOCKS = {
       location: 'Online',
       locationLink: 'https://www.youtube.com/watch?v=IXLnoqQV5wE',
       locationLinkText: 'Meetup Community',
+      twitterButton:
+        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "International Pandemic Discussion MeetUp" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
     {
       id: 'a2a7fb57-1ad1-4bdf-83e6-2e79f97f0701',
@@ -32,6 +34,8 @@ const MOCKS = {
       locationLinkText: 'Register here',
       landscapeImage:
         'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80',
+      twitterButton:
+        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "2020 Annual VanHackathon" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
     {
       id: 'a3b5ed70-1624-471e-bf69-91337d0bf79b',
@@ -43,6 +47,8 @@ const MOCKS = {
       location: 'Online',
       locationLink: 'https://www.youtube.com/watch?v=IXLnoqQV5wE',
       locationLinkText: 'Event program',
+      twitterButton:
+        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "Toronto Developer Conference 2020" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
     {
       id: 'bcfb97e0-1f00-4c60-b0e2-9f9091ec2d70',
@@ -57,6 +63,8 @@ const MOCKS = {
       video: '//player.vimeo.com/video/399003581?title=0&amp;portrait=0&amp;byline=0&amp;autoplay=1;loop=1;controls=0',
       heroImage:
         'https://images.unsplash.com/photo-1555421689-43cad7100750?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+      twitterButton:
+        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "Hiring for the 2021 Spring" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
     {
       id: '2c4ed3c0-8945-466e-89fd-d0e2333b5855',
@@ -70,6 +78,8 @@ const MOCKS = {
       locationLinkText: 'Video',
       heroImage:
         'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=635&q=80',
+      twitterButton:
+        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "Thomas\' Hiring Success Story" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
     {
       id: 'a08e0268-1c47-4737-ad31-794012512164',
@@ -83,13 +93,15 @@ const MOCKS = {
       locationLinkText: 'Video',
       landscapeImage:
         'https://images.unsplash.com/photo-1556761175-129418cb2dfe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80',
+      twitterButton:
+        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "How does VanHack work under the hood?" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
   ],
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
   PageConfiguration.fetchProfileImage();
-  const events = await PageConfiguration.appendEvents();
+  const events = await PageConfiguration.getEvents();
 
   const eventsModel = new Events(events);
 });
@@ -113,8 +125,10 @@ class PageConfiguration {
     }
   };
 
-  static appendEvents = async () => {
+  static getEvents = async () => {
+    Loader.set();
     const events = await Fetcher.fetchMockEvents();
+    Loader.clear();
     if (events.length) {
       return events.map((rawEvent) => new Event(rawEvent));
     } else {
@@ -142,7 +156,7 @@ class Fetcher {
 
   static fetchMockEvents = () => {
     return new Promise((resolve) => {
-      const delay = Random.positiveInteger(1000);
+      const delay = Random.positiveInteger(2000, 600);
       setTimeout(() => resolve(MOCKS.events), delay);
     });
   };
@@ -233,6 +247,22 @@ class EventTypeHelper {
   };
 }
 
+class Loader {
+  static set = () => {
+    const eventList = document.querySelector('.event-list');
+    const loader = document.querySelector('.content__loader');
+    loader.classList.add('content__loader--enabled');
+    eventList.classList.add('event-list--loading');
+  };
+
+  static clear = () => {
+    const eventList = document.querySelector('.event-list');
+    const loader = document.querySelector('.content__loader');
+    loader.classList.remove('content__loader--enabled');
+    eventList.classList.remove('event-list--loading');
+  };
+}
+
 // Models
 
 class Event {
@@ -248,6 +278,7 @@ class Event {
     heroImage,
     landscapeImage,
     video,
+    twitterButton,
   }) {
     this.title = title;
     this.description = description;
@@ -260,6 +291,7 @@ class Event {
     this.heroImage = heroImage;
     this.landscapeImage = landscapeImage;
     this.video = video;
+    this.twitterButton = twitterButton;
 
     this.eventPhotos = [];
     this.eventCard = null;
@@ -268,7 +300,7 @@ class Event {
   }
 
   configureEventPhotos = async () => {
-    new Array(Random.positiveInteger(10, 4)).fill(0).forEach(async (item, index) => {
+    new Array(Random.positiveInteger(10, 5)).fill(0).forEach(async (item, index) => {
       const seed = Random.positiveInteger(1000, -1000);
 
       const imageUrl = `https://picsum.photos/320/180?random=${seed + index}`;
@@ -284,6 +316,7 @@ class Event {
 
     this.setCardType();
     this.setCardHeader();
+    this.setCardTwitterButton();
     this.setCardDescription();
     this.setCardDate();
     this.setCardLocation();
@@ -292,7 +325,8 @@ class Event {
     this.setCardLandscapeImage();
     this.setCardVideo();
 
-    this.addClickListener();
+    this.addToggleClickListener();
+    this.addApplyClickListener();
 
     return this.eventCard;
   };
@@ -337,6 +371,16 @@ class Event {
 
     cardTitle.textContent = this.title;
     cardSubtitle.textContent = new EventTypeHelper(this.type).toText();
+  };
+
+  setCardTwitterButton = () => {
+    const twitterButton = this.eventCard.querySelector('.event-card__twitter-button');
+    const shareURL = new URL(
+      `http://twitter.com/share?text=Check "${this.title}" event on VanHack! ${
+        this.locationLink ? this.locationLink : ''
+      }`
+    );
+    twitterButton.setAttribute('href', shareURL.toString());
   };
 
   setCardDescription = () => {
@@ -403,6 +447,7 @@ class Event {
   };
 
   setCardVideo = () => {
+    const videoContainer = this.eventCard.querySelector('.event-card__video-container');
     const iframeWrapper = this.eventCard.querySelector('.event-card__iframe-wrapper');
     if (this.video) {
       const iframe = document.createElement('iframe');
@@ -412,12 +457,15 @@ class Event {
 
       iframeWrapper.append(iframe);
     } else {
-      iframeWrapper.remove();
+      videoContainer.remove();
     }
   };
 
-  addClickListener = () => {
+  addToggleClickListener = () => {
     this.eventCard.addEventListener('click', (event) => {
+      if (!this.eventCard.classList.contains('event-card--toggled')) {
+        event.preventDefault();
+      }
       const toggledEventCard = document.querySelector('.event-card--toggled');
       if (toggledEventCard) {
         toggledEventCard.classList.remove('event-card--toggled');
@@ -428,6 +476,15 @@ class Event {
       setTimeout(() => {
         this.eventCard.scrollIntoView({ behavior: 'smooth' });
       }, 120);
+    });
+  };
+
+  addApplyClickListener = () => {
+    const applyButton = this.eventCard.querySelector('.event-card__apply-button');
+    applyButton.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      this.eventCard.classList.add('event-card--applying');
     });
   };
 }

@@ -17,6 +17,10 @@
   --hero-image-width: 180px;
   --landscape-image-height: 180px;
   --landscape-image-width: 240px;
+  --box-shadow: 0 0px 5.3px rgba(0, 0, 0, 0.02), 0 0px 17.9px rgba(0, 0, 0, 0.036), 0 0px 80px rgba(0, 0, 0, 0.07);
+  --box-shadow--hover: 0 5.2px 2.2px rgba(0, 0, 0, 0.02), 0 12.5px 5.3px rgba(0, 0, 0, 0.028),
+    0 23.5px 10px rgba(0, 0, 0, 0.035), 0 42px 17.9px rgba(0, 0, 0, 0.042), 0 78.5px 33.4px rgba(0, 0, 0, 0.05),
+    0 188px 80px rgba(0, 0, 0, 0.07);
 }
 
 html {
@@ -56,13 +60,17 @@ p {
   }
 }
 
-@keyframes card-jiggle {
+@keyframes spin {
   from {
-    transform: scale(1.02);
+    transform: rotate(0);
+  }
+
+  70% {
+    transform: rotate(180deg);
   }
 
   to {
-    transform: scale(1.02) matrix3d(1, 0, 0, 0.00009, 0, 1, 0, 0.00006, 0, 0, 1, 0, 0, 0, 0, 1);
+    transform: rotate(360deg);
   }
 }
 
@@ -136,7 +144,24 @@ p {
   min-height: 2rem;
 }
 
-/* Main > Events > .event-list */
+/* Main > .content__loader */
+
+.content__loader {
+  display: none;
+}
+
+.content__loader--enabled {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 480px;
+}
+
+.content__loader-icon {
+  animation: spin 2s infinite;
+}
+
+/* Main > .event-list */
 
 .event-list {
   display: flex;
@@ -144,7 +169,11 @@ p {
   justify-content: space-between;
 }
 
-/* Main > Events > .event-card */
+.event-list--loading {
+  display: none;
+}
+
+/* Main > .event-card */
 
 .event-card {
   height: min-content;
@@ -158,10 +187,6 @@ p {
   transition: box-shadow 0.2s ease-out, transform 0.1s ease-out;
   box-shadow: var(--box-shadow);
 
-  --box-shadow: 0 0px 5.3px rgba(0, 0, 0, 0.02), 0 0px 17.9px rgba(0, 0, 0, 0.036), 0 0px 80px rgba(0, 0, 0, 0.07);
-  --box-shadow--hover: 0 5.2px 2.2px rgba(0, 0, 0, 0.02), 0 12.5px 5.3px rgba(0, 0, 0, 0.028),
-    0 23.5px 10px rgba(0, 0, 0, 0.035), 0 42px 17.9px rgba(0, 0, 0, 0.042), 0 78.5px 33.4px rgba(0, 0, 0, 0.05),
-    0 188px 80px rgba(0, 0, 0, 0.07);
   --image-border-radius: 12px;
 }
 
@@ -188,7 +213,33 @@ p {
   transform: scale(1.02);
 }
 
-/* Main > Events > .event-card > Images */
+/* Main > .event-card > Sharing */
+
+.card-header__subtitle-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 20px;
+}
+
+.event-card__twitter-button {
+  text-decoration: none;
+  color: var(--blue--dark);
+  border: 1px solid var(--blue--dark);
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.5rem;
+  font-size: 10px;
+}
+
+.event-card__twitter-button-icon {
+  margin-right: 4px;
+}
+
+/* Main > .event-card > Images */
 
 .event-card__hero-image-wrapper {
   width: var(--hero-image-width);
@@ -254,7 +305,7 @@ p {
   transition: filter 0.1s ease-out;
 }
 
-/* Main > Events > .event-card > Video */
+/* Main > .event-card > Video */
 
 .event-card__video-container {
   position: absolute;
@@ -288,10 +339,10 @@ p {
   height: 100%;
   width: 100%;
 }
-/* Main > Events > .event-card > Header */
+/* Main > .event-card > Header */
 
 .event-card--with-hero-image .event-card__header,
-.event-card--with-hero-image .event-card__content {
+.event-card--with-hero-image .event-card__tab-container {
   margin-left: calc(var(--hero-image-width) + 32px);
 }
 
@@ -311,7 +362,30 @@ p {
   font-size: 3em;
 }
 
-/* Main > Events > .event-card > Information */
+.event-card__apply-button {
+  display: none;
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+  height: 4rem;
+  width: 6rem;
+  font-size: 1.33rem;
+  border: 1px solid var(--primary-color);
+  color: white;
+  border-radius: 6px;
+  padding: unset;
+  cursor: pointer;
+  background: linear-gradient(90deg, rgba(6, 117, 206, 1) 0%, rgba(15, 76, 117, 1) 100%);
+  background-size: 200% 100%;
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+
+.event-card__apply-button:hover {
+  transform: scale(1.05);
+  box-shadow: var(--box-shadow--hover);
+}
+
+/* Main > .event-card > Information */
 
 .event-card__location-container,
 .event-card__date-container {
@@ -357,7 +431,7 @@ p {
   margin: 0.5rem 0.25rem;
 }
 
-/* Main > Events > .event-card > Description */
+/* Main > .event-card > Description */
 
 .event-card__description {
   display: none;
@@ -369,7 +443,7 @@ p {
   margin: 16px 0 8px 0;
 }
 
-/* Main > Events > .event-card--toggled */
+/* Main > .event-card--toggled */
 
 .event-card--toggled {
   box-shadow: var(--box-shadow--hover);
@@ -402,4 +476,46 @@ p {
 
 .event-card--toggled .event-card__date-time {
   display: unset;
+}
+
+.event-card--toggled .event-card__twitter-button:hover {
+  background-color: var(--blue--regular);
+  color: var(--blue--light);
+}
+
+.event-card--toggled .event-card__apply-button {
+  display: block;
+}
+
+/* Main > .event-card > .event-card__tab-container */
+
+.event-card__tab-container {
+  overflow: hidden;
+  display: flex;
+}
+
+/* Main > .event-card > .event-card__tab-container > .event-card__content-tab */
+
+.event-card__content-tab {
+  width: 100%;
+  position: relative;
+  left: 0;
+  transition: left 0.25s ease-out;
+}
+
+.event-card--applying .event-card__content-tab {
+  left: -150%;
+}
+
+/* Main > .event-card > .event-card__tab-container > .event-card__application-form-tab*/
+
+.event-card__application-form-tab {
+  width: 100%;
+  position: relative;
+  left: 0;
+  transition: left 0.25s ease-out;
+}
+
+.event-card--applying .event-card__application-form-tab {
+  left: -100%;
 }
