@@ -7,20 +7,20 @@ const EVENT_TYPES = {
   OPEN_WEBINAR: 5,
 };
 
+const EVENT_APPLICATION_STATUSES_KEY = 'EventApplicationStatuses';
+
 const MOCKS = {
   events: [
     {
       id: '67abb5e7-c471-46d9-9f9a-574eff8b2878',
       title: 'International Pandemic Discussion MeetUp',
       description:
-        '<h3>Pretium Aenean Pharetra</h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tortor at risus viverra adipiscing at in tellus integer. Mauris in aliquam sem fringilla. Tristique senectus et netus et malesuada fames. Metus aliquam eleifend mi in nulla posuere sollicitudin. Odio eu feugiat pretium nibh. Phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet enim. Gravida cum sociis natoque penatibus et magnis dis parturient. Purus ut faucibus pulvinar elementum integer enim neque. Purus faucibus ornare suspendisse sed nisi lacus sed. Pellentesque dignissim enim sit amet venenatis urna cursus. Vitae ultricies leo integer malesuada nunc. Lobortis scelerisque fermentum dui faucibus in ornare quam viverra. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi.</br></br><h3>Volutpat Maecenas</h3>Eu non diam phasellus vestibulum lorem sed. Viverra aliquet eget sit amet tellus. Phasellus faucibus scelerisque eleifend donec pretium vulputate. Purus in mollis nunc sed id. Odio ut enim blandit volutpat maecenas volutpat blandit. Nunc mattis enim ut tellus elementum sagittis. Nibh ipsum consequat nisl vel pretium lectus quam id. Consequat mauris nunc congue nisi vitae suscipit. Elementum integer enim neque volutpat ac tincidunt vitae. Turpis in eu mi bibendum neque. Ut morbi tincidunt augue interdum velit euismod in pellentesque.</br></br>At varius vel pharetra vel turpis. Mi in nulla posuere sollicitudin. Sed vulputate odio ut enim blandit volutpat maecenas. Risus sed vulputate odio ut enim blandit. Senectus et netus et malesuada fames ac turpis. Arcu non sodales neque sodales ut etiam sit amet nisl. Dis parturient montes nascetur ridiculus mus mauris. Elit duis tristique sollicitudin nibh sit amet commodo nulla. Pretium aenean pharetra magna ac placerat vestibulum lectus mauris. Magna fringilla urna porttitor rhoncus dolor purus non enim. Condimentum id venenatis a condimentum vitae. Sagittis id consectetur purus ut. Eget egestas purus viverra accumsan in nisl. In nisl nisi scelerisque eu.',
+        '<h3>Pretium Aenean Pharetra</h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tortor at risus viverra adipiscing at in tellus integer. Mauris in aliquam sem fringilla. Tristique senectus et netus et malesuada fames. Metus aliquam eleifend mi in nulla posuere sollicitudin. Odio eu feugiat pretium nibh. Phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet enim. Gravida cum sociis natoque penatibus et magnis dis parturient. Purus ut faucibus pulvinar elementum integer enim neque. Purus faucibus ornare suspendisse sed nisi lacus sed. Pellentesque dignissim enim sit amet venenatis urna cursus. Vitae ultricies leo integer malesuada nunc. Lobortis scelerisque fermentum dui faucibus in ornare quam viverra. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi.',
       date: '2020-08-18T18:00:00',
       type: EVENT_TYPES.MEETUP,
       location: 'Online',
       locationLink: 'https://www.youtube.com/watch?v=IXLnoqQV5wE',
       locationLinkText: 'Meetup Community',
-      twitterButton:
-        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "International Pandemic Discussion MeetUp" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
     {
       id: 'a2a7fb57-1ad1-4bdf-83e6-2e79f97f0701',
@@ -34,8 +34,6 @@ const MOCKS = {
       locationLinkText: 'Register here',
       landscapeImage:
         'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80',
-      twitterButton:
-        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "2020 Annual VanHackathon" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
     {
       id: 'a3b5ed70-1624-471e-bf69-91337d0bf79b',
@@ -47,8 +45,6 @@ const MOCKS = {
       location: 'Online',
       locationLink: 'https://www.youtube.com/watch?v=IXLnoqQV5wE',
       locationLinkText: 'Event program',
-      twitterButton:
-        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "Toronto Developer Conference 2020" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
     {
       id: 'bcfb97e0-1f00-4c60-b0e2-9f9091ec2d70',
@@ -63,8 +59,6 @@ const MOCKS = {
       video: '//player.vimeo.com/video/399003581?title=0&amp;portrait=0&amp;byline=0&amp;autoplay=1;loop=1;controls=0',
       heroImage:
         'https://images.unsplash.com/photo-1555421689-43cad7100750?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-      twitterButton:
-        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "Hiring for the 2021 Spring" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
     {
       id: '2c4ed3c0-8945-466e-89fd-d0e2333b5855',
@@ -78,8 +72,6 @@ const MOCKS = {
       locationLinkText: 'Video',
       heroImage:
         'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=635&q=80',
-      twitterButton:
-        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "Thomas\' Hiring Success Story" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
     {
       id: 'a08e0268-1c47-4737-ad31-794012512164',
@@ -93,8 +85,6 @@ const MOCKS = {
       locationLinkText: 'Video',
       landscapeImage:
         'https://images.unsplash.com/photo-1556761175-129418cb2dfe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80',
-      twitterButton:
-        '<a href="https://twitter.com/intent/tweet?&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-text="Check "How does VanHack work under the hood?" event on VanHack! https://www.youtube.com/watch?v=IXLnoqQV5wE" data-related="GoVanHack" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
     },
   ],
 };
@@ -158,6 +148,13 @@ class Fetcher {
     return new Promise((resolve) => {
       const delay = Random.positiveInteger(2000, 600);
       setTimeout(() => resolve(MOCKS.events), delay);
+    });
+  };
+
+  static sendMockApplication = () => {
+    return new Promise((resolve) => {
+      const timeoutDuration = Random.positiveInteger(2000, 800);
+      setTimeout(() => resolve(), timeoutDuration);
     });
   };
 }
@@ -263,6 +260,36 @@ class Loader {
   };
 }
 
+class ToastHelper {
+  static show = ({ message, type = 'regular' }, buttonMessage, buttonLink, duration = 2250) => {
+    const toast = document.querySelector('.events__toast');
+    const toastMessage = toast.querySelector('.toast__message');
+
+    toast.classList.add('events__toast--shown');
+    toast.classList.add(`events__toast--${type}`);
+    toastMessage.textContent = message;
+
+    if (buttonMessage) {
+      let button;
+      if (buttonLink) {
+        toast.classList.add('events__toast--with-link');
+        button = toast.querySelector('.toast__link');
+        button.setAttribute('href', buttonLink);
+      } else {
+        button = toast.querySelector('.toast__button');
+      }
+      button.textContent = buttonMessage;
+    }
+
+    setTimeout(() => {
+      toast.classList.remove('events__toast--shown');
+      toast.classList.remove('events__toast--with-link');
+      toastMessage.textContent = '';
+      button.textContent = '';
+    }, duration);
+  };
+}
+
 // Models
 
 class Event {
@@ -298,6 +325,9 @@ class Event {
     this.applicationForm = null;
     this.disableToggledCard = null;
     this.isToggled = false;
+    this.applicationInProgress = false;
+
+    this.applied = JSON.parse(localStorage.getItem(EVENT_APPLICATION_STATUSES_KEY) || '{}')[this.id];
 
     this.configureEventPhotos();
   }
@@ -309,6 +339,12 @@ class Event {
       const imageUrl = `https://picsum.photos/320/180?random=${seed + index}`;
       this.eventPhotos.push(imageUrl);
     });
+  };
+
+  configureApplicationStatus = () => {
+    if (this.applied) {
+      this.eventCard.classList.add('event-card--applied');
+    }
   };
 
   createEventCard = () => {
@@ -331,6 +367,8 @@ class Event {
     this.addToggleClickListener();
     this.addApplyClickListener();
     this.addCancelClickListener();
+
+    this.configureApplicationStatus();
 
     return this.eventCard;
   };
@@ -422,8 +460,6 @@ class Event {
       const imageElement = document.createElement('img');
       imageElement.setAttribute('src', eventPhoto);
       imageElement.setAttribute('alt', `Event photo for the ${this.title} event.`);
-      imageElement.setAttribute('height', '180');
-      imageElement.setAttribute('width', '320');
       imageElement.classList.add('event-photos__image');
 
       cardImages.append(imageElement);
@@ -483,12 +519,30 @@ class Event {
   addApplyClickListener = () => {
     this.applicationForm = this.eventCard.querySelector('.event-card__application-form');
     const applyButton = this.eventCard.querySelector('.event-card__apply-button');
-    applyButton.addEventListener('click', (event) => {
-      event.stopPropagation();
+    if (!this.applied) {
+      applyButton.addEventListener('click', (event) => {
+        event.stopPropagation();
 
-      this.applicationForm.querySelectorAll('input').forEach((input) => (input.value = null));
-      this.eventCard.classList.add('event-card--applying');
-    });
+        if (this.type === EVENT_TYPES.PREMIUM_WEBINAR) {
+          this.cancelApplication();
+          ToastHelper.show(
+            { message: 'Cannot apply to a premium webinar.', type: 'danger' },
+            'Join premium today!',
+            'https://vanhack.com/premium/',
+            8000
+          );
+        } else {
+          if (this.applicationInProgress) {
+            this.sendApplication();
+          } else {
+            this.applicationInProgress = true;
+            this.resetForm();
+            this.eventCard.classList.add('event-card--applying');
+            this.applicationForm.querySelector('input').focus();
+          }
+        }
+      });
+    }
   };
 
   addCancelClickListener = () => {
@@ -501,8 +555,57 @@ class Event {
   };
 
   cancelApplication = () => {
-    this.applicationForm.querySelectorAll('input').forEach((input) => (input.value = null));
+    this.applicationInProgress = false;
+    this.resetForm();
     this.eventCard.classList.remove('event-card--applying');
+  };
+
+  resetForm = () => {
+    this.applicationForm.querySelectorAll('.application-form__input').forEach((input) => {
+      input.value = null;
+      input.parentElement.classList.remove('application-form__input-wrapper--invalid');
+    });
+  };
+
+  sendApplication = async () => {
+    const applicationModel = {
+      name: null,
+      surname: null,
+      email: null,
+      areaOfInterest: null,
+    };
+    let isFormFilled = true;
+    ['name', 'surname', 'email', 'areaOfInterest'].forEach((inputName) => {
+      const input = this.applicationForm.querySelector(`[name=${inputName}]`);
+      input.parentElement.classList.remove('application-form__input-wrapper--invalid');
+
+      if (isFormFilled) {
+        isFormFilled = Boolean(input.value);
+      }
+
+      if (!input.value) {
+        input.parentElement.classList.add('application-form__input-wrapper--invalid');
+      } else {
+        applicationModel[inputName] = input.value;
+      }
+    });
+    if (isFormFilled) {
+      this.eventCard.classList.add('event-card--outgoing-application');
+      await Fetcher.sendMockApplication(applicationModel);
+
+      this.eventCard.classList.add('event-card--applied');
+      this.eventCard.classList.remove('event-card--outgoing-application');
+
+      this.cancelApplication();
+      this.setApplicationStatusToLocalStorage();
+      ToastHelper.show({ message: 'Application sent!' });
+    }
+  };
+
+  setApplicationStatusToLocalStorage = () => {
+    const applicationStatuses = JSON.parse(localStorage.getItem(EVENT_APPLICATION_STATUSES_KEY) || '{}');
+    applicationStatuses[this.id] = true;
+    localStorage.setItem(EVENT_APPLICATION_STATUSES_KEY, JSON.stringify(applicationStatuses));
   };
 }
 
